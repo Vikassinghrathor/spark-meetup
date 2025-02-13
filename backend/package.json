@@ -1,0 +1,46 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend for the Spontaneous Meetup Broadcast feature using Express and Firebase Admin SDK.",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint . --ext .ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "firebase-admin": "^11.10.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.8.0",
+    "@types/cors": "^2.8.13",
+    "@types/body-parser": "^1.19.2",
+    "typescript": "^5.2.2",
+    "ts-node-dev": "^2.0.0",
+    "eslint": "^8.50.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.3",
+    "ts-jest": "^29.1.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Vikassinghrathor/spark-meetup#readme",
+  "bugs": {
+    "url": "https://github.com/Vikassinghrathor/spark-meetup/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vikassinghrathor/spark-meetup.git"
+  }
+}
