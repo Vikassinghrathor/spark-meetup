@@ -1,0 +1,317 @@
+openapi: 3.0.0
+info:
+  title: Spark Meetup API
+  description: API documentation for the Spontaneous Meetup Broadcast feature.
+  version: 1.0.0
+  contact:
+    name: Support
+    email: support@sparkmeetup.com
+    url: https://github.com/Vikassinghrathor/spark-meetup/issues
+servers:
+  - url: http://localhost:5000/api
+    description: Local development server
+paths:
+  /broadcasts:
+    get:
+      summary: Get all broadcasts
+      description: Retrieve a list of all broadcasts.
+      responses:
+        '200':
+          description: A list of broadcasts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Broadcast'
+        '500':
+          description: Internal server error.
+    post:
+      summary: Create a new broadcast
+      description: Create a new broadcast with details like date, time, location, and activity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BroadcastInput'
+      responses:
+        '201':
+          description: Broadcast created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+        '400':
+          description: Invalid input.
+        '500':
+          description: Internal server error.
+  /broadcasts/{id}:
+    get:
+      summary: Get a specific broadcast
+      description: Retrieve details of a specific broadcast by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the broadcast.
+      responses:
+        '200':
+          description: Broadcast details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+        '404':
+          description: Broadcast not found.
+        '500':
+          description: Internal server error.
+    put:
+      summary: Update a broadcast
+      description: Update details of a specific broadcast by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the broadcast.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BroadcastInput'
+      responses:
+        '200':
+          description: Broadcast updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broadcast'
+        '400':
+          description: Invalid input.
+        '404':
+          description: Broadcast not found.
+        '500':
+          description: Internal server error.
+    delete:
+      summary: Delete a broadcast
+      description: Delete a specific broadcast by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the broadcast.
+      responses:
+        '200':
+          description: Broadcast deleted successfully.
+        '404':
+          description: Broadcast not found.
+        '500':
+          description: Internal server error.
+  /requests:
+    post:
+      summary: Create a join request
+      description: Create a new join request for a specific broadcast.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinRequestInput'
+      responses:
+        '201':
+          description: Join request created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinRequest'
+        '400':
+          description: Invalid input.
+        '500':
+          description: Internal server error.
+  /requests/{broadcastId}:
+    get:
+      summary: Get join requests for a broadcast
+      description: Retrieve all join requests for a specific broadcast.
+      parameters:
+        - name: broadcastId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the broadcast.
+      responses:
+        '200':
+          description: A list of join requests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JoinRequest'
+        '404':
+          description: No requests found for this broadcast.
+        '500':
+          description: Internal server error.
+  /requests/{id}/accept:
+    post:
+      summary: Approve a join request
+      description: Approve a specific join request by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the join request.
+      responses:
+        '200':
+          description: Join request approved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinRequest'
+        '404':
+          description: Join request not found.
+        '500':
+          description: Internal server error.
+  /requests/{id}/reject:
+    post:
+      summary: Reject a join request
+      description: Reject a specific join request by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the join request.
+      responses:
+        '200':
+          description: Join request rejected successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinRequest'
+        '404':
+          description: Join request not found.
+        '500':
+          description: Internal server error.
+components:
+  schemas:
+    Broadcast:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the broadcast.
+        date:
+          type: string
+          format: date
+          description: Date of the broadcast.
+        time:
+          type: string
+          format: time
+          description: Time of the broadcast.
+        location:
+          type: string
+          description: Location of the broadcast.
+        activity:
+          type: string
+          description: Description of the activity.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the broadcast was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the broadcast was last updated.
+    BroadcastInput:
+      type: object
+      required:
+        - date
+        - time
+        - location
+        - activity
+      properties:
+        date:
+          type: string
+          format: date
+          description: Date of the broadcast.
+        time:
+          type: string
+          format: time
+          description: Time of the broadcast.
+        location:
+          type: string
+          description: Location of the broadcast.
+        activity:
+          type: string
+          description: Description of the activity.
+    JoinRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the join request.
+        broadcastId:
+          type: string
+          description: ID of the broadcast the request is for.
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the user.
+            name:
+              type: string
+              description: Name of the user.
+            email:
+              type: string
+              format: email
+              description: Email address of the user.
+        status:
+          type: string
+          enum: [pending, approved, rejected]
+          description: Status of the join request.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the join request was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the join request was last updated.
+    JoinRequestInput:
+      type: object
+      required:
+        - broadcastId
+        - user
+      properties:
+        broadcastId:
+          type: string
+          description: ID of the broadcast the request is for.
+        user:
+          type: object
+          required:
+            - id
+            - name
+            - email
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the user.
+            name:
+              type: string
+              description: Name of the user.
+            email:
+              type: string
+              format: email
+              description: Email address of the user.

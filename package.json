@@ -1,0 +1,40 @@
+{
+  "name": "spark-meetup",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A monorepo for the Spontaneous Meetup Broadcast feature with frontend and backend workspaces.",
+  "scripts": {
+    "dev:frontend": "npm --workspace frontend run dev",
+    "dev:backend": "npm --workspace backend run dev",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "build:frontend": "npm --workspace frontend run build",
+    "build:backend": "npm --workspace backend run build",
+    "build": "npm run build:frontend && npm run build:backend",
+    "test:frontend": "npm --workspace frontend run test",
+    "test:backend": "npm --workspace backend run test",
+    "test": "npm run test:frontend && npm run test:backend",
+    "lint:frontend": "npm --workspace frontend run lint",
+    "lint:backend": "npm --workspace backend run lint",
+    "lint": "npm run lint:frontend && npm run lint:backend"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vikassinghrathor/spark-meetup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vikassinghrathor/spark-meetup/issues"
+  },
+  "homepage": "https://github.com/Vikassinghrathor/spark-meetup#readme"
+}
